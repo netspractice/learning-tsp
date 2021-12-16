@@ -101,7 +101,7 @@ class NARModel(nn.Module):
             
             if return_pi:
                 # Perform greedy search during training if we want to log cost, pi during training
-                logits, _, pi, cost = self.greedy_search(nodes, graph)
+                logits, _, pi, cost = self.beam_search(nodes, graph, beam_size=3)
                 loss = nn.CrossEntropyLoss(weight=class_weights, reduction='mean')(
                     logits.permute(0, 3, 1, 2), targets)
                 return cost, loss, pi
